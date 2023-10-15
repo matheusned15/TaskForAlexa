@@ -1,29 +1,36 @@
 package com.example.matheusned.taskForAlexa.url.entity;
 
 
-
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class UrlShortener {
+public class UrlShortener implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "originalUrl")
     private String originalUrl;
-    @Column(name = "shortUrl")
-    private String shortUrl;
 
-    public UrlShortener(){
+    @Column(unique = true, nullable = false)
+    private String alias;
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
+
+    public UrlShortener() {
 
     }
 
-    public UrlShortener(Long id, String originalUrl, String shortUrl){
-        super();
-        this.id = id;
+    public UrlShortener(String originalUrl, String alias) {
         this.originalUrl = originalUrl;
-        this.shortUrl = shortUrl;
+        this.alias = alias;
     }
 
     public Long getId() {
@@ -42,11 +49,12 @@ public class UrlShortener {
         this.originalUrl = originalUrl;
     }
 
-    public String getShortUrl() {
-        return shortUrl;
-    }
-
-    public void setShortUrl(String shortUrl) {
-        this.shortUrl = shortUrl;
+    @Override
+    public String toString() {
+        return "Redirect{" +
+                "id=" + id +
+                ", alias='" + alias + '\'' +
+                ", url='" + originalUrl + '\'' +
+                '}';
     }
 }
